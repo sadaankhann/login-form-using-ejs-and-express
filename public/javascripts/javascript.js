@@ -5,6 +5,7 @@ async function submitForm(e) {
     e.preventDefault();
 
     let form = e.target;
+    form.reset();
 
     const response = await fetch('/add', {
         method: 'POST',
@@ -16,8 +17,6 @@ async function submitForm(e) {
             confirm_password: form.confirm.value
         })
     });
-
-    form = "";
 
     const data = await response.json();
 
