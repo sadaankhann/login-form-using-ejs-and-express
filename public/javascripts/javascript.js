@@ -5,20 +5,21 @@ async function submitForm(e) {
     e.preventDefault();
 
     let form = e.target;
-    form.reset();
 
     const response = await fetch('/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             username: form.username.value,
+            image : form.image.value,
             email: form.email.value,
             password: form.password.value,
-            confirm_password: form.confirm.value
+            confirm_password: form.confirm_password.value,
         })
     });
 
     const data = await response.json();
+    form.reset();
 
     if (!data.success) {
         userExistDiv.classList.remove('hidden')

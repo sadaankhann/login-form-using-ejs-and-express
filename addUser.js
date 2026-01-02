@@ -3,6 +3,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/addinguser');
 
 const addUser = mongoose.Schema({
     username : String,
+    image : String,
     email : String,
     password : String,
     confirm_password : String

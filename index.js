@@ -27,6 +27,7 @@ app.post('/add', async function (req, res) {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
+        image: req.body.image,
         confirm_password: req.body.confirm_password
     });
 
@@ -37,9 +38,34 @@ app.post('/add', async function (req, res) {
 });
 
 
-app.get('/read', async function (req, res) {
-    let viewData = await Model.find();
-    res.send(viewData);
+app.get('/users', async function (req, res) {
+    let allUsers = await Model.find();
+    res.render('users_page', { allUsers: allUsers });
+})
+
+app.get('/deleting', async function (req, res) {
+    try {
+        await Model.deleteMany({});
+        res.json({
+            success: true,
+            message: "All Users Deleted!"
+        })
+    } catch (err) {
+        res.json({
+            success: false,
+            message: "Users not deleted"
+
+        })
+    }
+})
+
+app.get('/delete/:id', async function(req,res){
+    try{
+        await Model.findOneAndDelete(req.params.id);
+        res.redirect('/users');
+    } catch(err){
+        res.send(err);
+    }
 })
 
 app.listen(3000, () => {
